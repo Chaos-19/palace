@@ -1,30 +1,34 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Eye, EyeOff, Shield, Lock, User } from "lucide-react"
-import Link from "next/link"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff, Shield, Lock, User } from "lucide-react";
+import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/router";
 
 export default function AdminLoginPage() {
-  const { toast } = useToast()
-  const [showPassword, setShowPassword] = useState(false)
+  const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     rememberMe: false,
-  })
-  const [isLoading, setIsLoading] = useState(false)
+  });
+
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     // Simulate login process
     setTimeout(() => {
@@ -32,18 +36,18 @@ export default function AdminLoginPage() {
         toast({
           title: "Login Successful",
           description: "Welcome to Palace Woodwork Admin Panel",
-        })
+        });
         // Redirect to admin dashboard
-        window.location.href = "/admin/dashboard"
+        router.push("/admin/dashboard");
       } else {
         toast({
           title: "Login Failed",
           description: "Invalid username or password",
-        })
+        });
       }
-      setIsLoading(false)
-    }, 1500)
-  }
+      setIsLoading(false);
+    }, 1500);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -53,7 +57,9 @@ export default function AdminLoginPage() {
             <Shield className="h-8 w-8 text-white" />
           </div>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
-          <p className="text-gray-600">Access the Palace Woodwork admin panel</p>
+          <p className="text-gray-600">
+            Access the Palace Woodwork admin panel
+          </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -66,7 +72,12 @@ export default function AdminLoginPage() {
                     id="username"
                     type="text"
                     value={formData.username}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, username: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        username: e.target.value,
+                      }))
+                    }
                     className="pl-10"
                     placeholder="Enter your username"
                     required
@@ -82,7 +93,12 @@ export default function AdminLoginPage() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }))
+                    }
                     className="pl-10 pr-10"
                     placeholder="Enter your password"
                     required
@@ -92,7 +108,11 @@ export default function AdminLoginPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -103,18 +123,30 @@ export default function AdminLoginPage() {
                 <Checkbox
                   id="rememberMe"
                   checked={formData.rememberMe}
-                  onCheckedChange={(checked) => setFormData((prev) => ({ ...prev, rememberMe: checked as boolean }))}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      rememberMe: checked as boolean,
+                    }))
+                  }
                 />
                 <Label htmlFor="rememberMe" className="text-sm">
                   Remember me
                 </Label>
               </div>
-              <Link href="/admin/forgot-password" className="text-sm text-amber-600 hover:underline">
+              <Link
+                href="/admin/forgot-password"
+                className="text-sm text-amber-600 hover:underline"
+              >
                 Forgot password?
               </Link>
             </div>
 
-            <Button type="submit" className="w-full bg-amber-600 hover:bg-amber-700" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full bg-amber-600 hover:bg-amber-700"
+              disabled={isLoading}
+            >
               {isLoading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
@@ -138,5 +170,5 @@ export default function AdminLoginPage() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

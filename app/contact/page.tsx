@@ -18,9 +18,13 @@ import {
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import AddressMap from "@/components/map-component";
+import { useRouter } from "next/router";
 
 export default function ContactPage() {
   const { toast } = useToast();
+
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -65,6 +69,7 @@ export default function ContactPage() {
       message
     )}`;
     //window.open(whatsappUrl, "_blank");
+    router.push(whatsappUrl); // Use router to navigate
   };
 
   return (

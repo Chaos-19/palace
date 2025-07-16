@@ -2,15 +2,19 @@
 
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
 
 export default function WhatsAppButton() {
+  const router = useRouter();
+
   const handleWhatsAppClick = () => {
     const phoneNumber = "+251911018883"; // Replace with actual WhatsApp number
     const message = "Hello! I'm interested in your woodworking services.";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
-    window.open(whatsappUrl, "_blank");
+    //window.open(whatsappUrl, "_blank");
+    router.push(whatsappUrl); // Use Next.js router to navigate
   };
 
   return (
