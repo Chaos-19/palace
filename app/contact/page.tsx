@@ -17,13 +17,11 @@ import {
 } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import AddressMap from "@/components/map-component";
-import { useRouter } from "next/router";
+//import AddressMap from "@/components/map-component";
+import dynamic from "next/dynamic";
 
 export default function ContactPage() {
   const { toast } = useToast();
-
-  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -68,9 +66,16 @@ export default function ContactPage() {
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
-    //window.open(whatsappUrl, "_blank");
-    router.push(whatsappUrl); // Use router to navigate
+
+    if (typeof window !== "undefined") {
+      window.location.href = whatsappUrl;
+    }
   };
+
+  // ⬇ Dynamically import the Leaflet component
+  const AddressMap = dynamic(() => import("@/components/map-component"), {
+    ssr: false,
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">

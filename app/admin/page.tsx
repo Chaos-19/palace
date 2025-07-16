@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Shield, Lock, User } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
   const { toast } = useToast();

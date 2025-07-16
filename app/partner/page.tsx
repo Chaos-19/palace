@@ -35,7 +35,29 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function PartnerPage() {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  type FormData = {
+    companyName: string;
+    contactName: string;
+    email: string;
+    phone: string;
+    website: string;
+    address: string;
+    businessType: string;
+    yearsInBusiness: string;
+    annualRevenue: string;
+    employeeCount: string;
+    partnershipType: string;
+    territories: string[];
+    experience: string;
+    why: string;
+    references: string;
+    certifications: string;
+    portfolio: string;
+    termsAccepted: boolean;
+    marketingConsent: boolean;
+  };
+
+  const [formData, setFormData] = useState<FormData>({
     // Company Information
     companyName: "",
     contactName: "",
